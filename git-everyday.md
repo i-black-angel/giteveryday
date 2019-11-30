@@ -28,3 +28,31 @@ $ git tar v2.43 (2)
 
 1. 在当前目录下添加所有东西
 2. 添加一个轻量的，未注释的标签
+
+---
+## Git 配置
+
+Git 的配置项分为三个级别：--system, --global, --local。
+
+级别 | 参数  | 文件
+-|-|-
+系统 | --system | /etc/gitconfig
+用户 | --global | ~/.gitconfig 或 ~/.config/git/config
+仓库 | --local | .git/config
+
+使用 --edit 参数可以打开一个编辑器修改 Git 的配置文件
+编辑 Git 的系统配置文件
+git config --system --edit
+编辑 Git 的用户级别配置文件
+git config --global --edit
+编辑当前本地仓库配置文件
+git config --edit，因为 Git 的默认级别就 --local
+
+查看 Git 配置可以使用 --list 参数，
+git config --list 列出当前生效的配置项，
+使用 git config --system --list 列出 /etc/gitconfig 文件中所配置的内容项，
+使用 git config --global --list 列出 ~/.gitconfig 或 ~/.config/git/config 文件中所配置的内容项，
+使用 git config --local --list 列出本地仓库 .git/config 文件中所配置的内容项
+
+> Git 的配置文件都是普通文本文件，所以你可以使用普通文本编辑器对配置文件进行修改或新增配置项，这会比运行 `git config` 命令容易得多。
+
