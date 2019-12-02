@@ -11,7 +11,7 @@ $ git config --global user.email "youremail@address.com"
 
 初次遇见两段如此长的命令行，我敢打赌你也是像我一样记不住的。接下来我们通过下面的学习，我相信你会慢慢了解到它的简单以及有趣之处。
 
-首先，Git 会读取一系列的配置文件来配置它的行为。第一个读取的文件是系统级别的 `/etc/gitconfig`，配置文件中的内容会作用于系统当中每一个用户以及他们所有的 git 仓库。你可以通过给 `git config` 命令带上 `--system` 参数读写该配置文件，默认情况下，该文件不存在，且必须有 root 权限才能操作。
+首先，Git 会读取一系列的配置文件来配置它的行为。第一个读取的文件是系统级别的 `/etc/gitconfig`，配置文件中的内容会作用于系统当中每一个用户以及他们所有的 git 仓库。你可以通过给 `git config` 命令带上 `--system` 参数读写该配置文件，默认情况下，该文件是不存在的，且必须有 root 权限才能操作。
 
 第二个读取的配置文件是用户级别的 `~/.gitconfig` （或者 `~/.config/git/config`），配置文件中的内容仅作用于当前用户。你可以通过给 `git config` 命令带上 `--global` 参数读写该配置文件。如文章开头例子的设定便会写入该配置文件：
 
@@ -39,7 +39,7 @@ $ git config --global user.email "youremail@address.com"
 ## 基本配置
 
 Git 提供了大量的配置项供你自定义它的非默认行为，你可以在你喜爱的 Linux 终端上输入 `git config` 之后按两次 `TAB` 键并根据提示输入 `y`，即可列出所有的配置项。当然了，其中大部分的配置都有其特定的使用场景，本文将只关注 Git 通用的一部分配置，每一个配置项的详细信息及注意事项可以参考：
-1. [官方文档](https://git-scm.com/docs/git-config)：[https://git-scm.com/docs/git-config](https://git-scm.com/docs/git-config)
+1. 官方文档：[https://git-scm.com/docs/git-config](https://git-scm.com/docs/git-config)
 2. 或者参考本地手册：
 
     ```shell
@@ -47,23 +47,17 @@ Git 提供了大量的配置项供你自定义它的非默认行为，你可以�
     $ git help config
     ```
 
-3. 或者使用 `man` 指令进行查阅：
+3. 又或者使用 `man` 指令进行查阅：
 
     ```shell
     $ man git-config
     ```
 
-在前面的内容我们已经见识了 `user.name` 及 `user.email` 的配置，接下来我们再看几个 git 常用的配置。
+在前面的内容中我们已经见识了 `user.name` 及 `user.email` 的配置，接下来我们再看几个 Git 的常用配置。
 
 **core.editor**
 
-默认情况下，Git 使用系统环境变量（`EDITOR` 或者 `VISUAL`）所定义的编辑器进行编辑，如果是 Debian 系的操作系统（比如：Debian，Ubuntu 等），可以使用
-
-```shell
-$ update-alternative --config editor
-```
-
-查看系统配置的编辑器，比如：
+默认情况下，Git 使用当前系统环境变量（`EDITOR` 或者 `VISUAL`）所定义的编辑器进行编辑，如果环境变量为空，在 Linux 操作系统中可以使用命令 `update-alternative --config editor` 查看当前系统配置的编辑器，比如：
 
 ```shell
 $ update-alternative --config editor
@@ -71,21 +65,34 @@ There are 5 choices for the alternative editor (providing /usr/bin/editor).
 
   Selection    Path                Priority   Status
 ------------------------------------------------------------
-  0            /bin/nano            40        auto mode
+* 0            /bin/nano            40        auto mode
   1            /bin/nano            40        manual mode
   2            /usr/bin/code        0         manual mode
   3            /usr/bin/emacs24     0         manual mode
-* 4            /usr/bin/vim.basic   30        manual mode
+  4            /usr/bin/vim.basic   30        manual mode
   5            /usr/bin/vim.tiny    15        manual mode
 
-Press <enter> to keep the current choice[*], or type selection number: 
+Press <enter> to keep the current choice[*], or type selection number:
 ```
 
-color.ui
+在当前系统配置的默认编辑器为 `/bin/nano`，数字前面带有 **\*** 号的便是。如果你不希望使用系统默认配置，那么此处可以使用 `core.editor` 进行配置：
+
+```shell
+$ git config --global core.editor vi
+```
+
+>关于 `--global` 所代表的级别及应用范围，上文有详细的解释，如果有疑惑的地方可以参考一下**配置文件**一节内容。
+
+这样的话，不管你当前系统的默认编辑器是什么，Git 都会使用 `vi` 作为编辑器来编辑信息。
+
+**alias.\***
+
+Git 配置中最实用的我认为就是 `alias.*` 了，
 
 alias.st
 alias.co
 alias.br
+color.ui
 
 ## 列出配置信息
 
