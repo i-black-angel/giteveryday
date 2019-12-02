@@ -1,11 +1,14 @@
 # 每天 git
 
-# 概述
+## 概述
+
 * 独立开发者（脱机）
 * 独立开发者（联机）
 
-# 独立开发者（脱机）
+## 独立开发者（脱机）
+
 一个脱机独立开发者不需要与其他人员交换修改补丁，且工作在一个单一的 git 仓库，使用下列命令。
+
 * git init 创建一个新的 git 仓库；
 * git log 查看修改日志；
 * git checkout 及 git branch 用于转换分去；
@@ -18,6 +21,7 @@
 * git tag 打一个标签。
 
 ## 例子
+
 使用一个 tar 包作为开始点新建一个 git 仓库。
 $ tar -xzvf frotz.tar.gz
 $ cd frotz
@@ -30,6 +34,7 @@ $ git tar v2.43 (2)
 2. 添加一个轻量的，未注释的标签
 
 ---
+
 ## Git 配置
 
 Git 的配置项分为三个级别：--system, --global, --local。
@@ -55,4 +60,3 @@ git config --list 列出当前生效的配置项，
 使用 git config --local --list 列出本地仓库 .git/config 文件中所配置的内容项
 
 > Git 的配置文件都是普通文本文件，所以你可以使用普通文本编辑器对配置文件进行修改或新增配置项，这会比运行 `git config` 命令容易得多。
-
