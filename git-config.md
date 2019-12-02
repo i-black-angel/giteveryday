@@ -5,8 +5,8 @@
 也许当初你匆匆而过，早已经忘记了在何时何地配置过你的用户名和邮箱地址，但这却是使用 git 最初的一件事，形如：
 
 ```shell
-$ git config --global user.name "Your Name"
-$ git config --global user.email "youremail@address.com"
+git config --global user.name "Your Name"
+git config --global user.email "youremail@address.com"
 ```
 
 初次遇见两段如此长的命令行，我敢打赌你也是像我一样记不住的。接下来我们通过下面的学习，我相信你会慢慢了解到它的简单以及有趣之处。
@@ -43,14 +43,14 @@ Git 提供了大量的配置项供你自定义它的非默认行为，你可以�
 2. 或者参考本地手册：
 
     ```shell
-    $ git config --help
-    $ git help config
+    git config --help
+    git help config
     ```
 
 3. 又或者使用 `man` 指令进行查阅：
 
     ```shell
-    $ man git-config
+    man git-config
     ```
 
 在前面的内容中我们已经见识了 `user.name` 及 `user.email` 的配置，接下来我们再看几个 Git 的常用配置。
@@ -78,7 +78,7 @@ Press <enter> to keep the current choice[*], or type selection number:
 在当前系统配置的默认编辑器为 `/bin/nano`，数字前面带有 **\*** 号的便是。如果你不希望使用系统默认配置，那么此处可以使用 `core.editor` 进行配置：
 
 ```shell
-$ git config --global core.editor vi
+git config --global core.editor vi
 ```
 
 >关于 `--global` 所代表的级别及应用范围，上文有详细的解释，如果有疑惑的地方可以参考一下**配置文件**一节内容。
@@ -87,20 +87,116 @@ $ git config --global core.editor vi
 
 **alias.\***
 
-Git 配置中最实用的我认为就是 `alias.*` 了，
+Git 配置中最实用的我认为就是 `alias.*` 了，alias 的中文意思是“别名”，意思是可以使用另一个命名来代替本来的名称，这样你就可以使用一些简写来代替长长的命令行输入了。比如，你可以使用 `git st` 代替 `git status` 命令（正如大多数人正在偷懒的做法一样）：
 
-alias.st
-alias.co
-alias.br
-color.ui
+```shell
+git config --global alias.st status
+```
+
+好了，此时你在命令行输入 `git st` 试试效果如何：
+
+```shell
+git st
+```
+
+除了 `git st` 之外，你还可以继续将更多的命令进行简写处理，比如使用 `co` 代替 `checkout`，`ci` 代替 `commit`，`br` 代替 `branch`等：
+
+```shell
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.br branch
+```
+
+这样你需要拉分支的时候就可以简写为：
+
+```shell
+git co -b new_branch
+```
+
+更多丰富的别名也可以参考[廖雪峰 Git 教程 -- 配置别名](https://www.liaoxuefeng.com/wiki/896043488029600/898732837407424)一文，文中提供了一些好玩的配置。比如配置了 `unstage` 用来撤销缓冲区的修改，以及 `last` 用于显示最后一次提交的日志：
+
+```shell
+git config --global alias.unstage 'reset HEAD'
+git config --global alias.last 'log -1'
+```
+
+这样当你需要撤销缓冲区的修改的时候就可以直接使用 `git unstage` 来完成了：
+
+```shell
+git unstage thread.cpp
+```
+
+显示最后一次提交信息也是，只需要使用 `git last` 来完成即可。
+
+**color.ui**
+
+Git 配置中另外一个非常重要的特性是颜色。Git 完全支持彩色终端的输出，能够使用不同颜色的可视化标记来达到快速信息分析的目的。颜色输出可以通过 `color.ui` 的值来进行配置，有三个重要的参数值：
+
+* always
+* auto
+* never
+
+Git 1.8.4 及以后的版本默认参数是 `auto`，意味着默认已经打开颜色支持；而 Git 1.8.3 或之前的版本如果需要颜色支持的话，需要手动配置 `color.ui` 为 `auto` 或 `true`：
+
+```shell
+git config --global color.ui auto
+```
 
 ## 列出配置信息
 
---list
+在**配置文件**一节中的内容提到，Git 会依次读取三个级别（system，global，local）的配置文件信息，因为配置文件都是普通文本文件，你可以直接使用编辑器打开查看，或者使用 Git 提供的 `--list` 进行查看：
+
+```shell
+git config --list
+```
+
+当不带级别参数（`--system`，`--global` 或 `--local`）调用时，显示的是当前生效的所有配置参数信息，以 `key=value` 的形式显示，如：
+
+```shell
+$ git config --list
+alias.st=status
+alias.co=checkout
+user.name=Your Name
+user.email=youremail@address.com
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+```
+
+当带上级别参数调用时，显示的即是对应级别的配置文件的所有信息：
+
+```shell
+git config --system --list
+```
+
+显示的是 `/etc/gitconfig` 配置文件的信息；
+
+```shell
+git config --global --list
+```
+
+显示的是 `~/.gitconfig` 或 `~/.config/git/config` 配置文件的信息；
+
+```shell
+git config --local --list
+```
+
+显示的是当前 Git 仓库下的 `.git/config` 配置文件的信息。
 
 ## 编辑配置信息
 
---edit
+因为 Git 的配置文件都是普通文本文件，所以你可以直接使用编辑器（如 `vi`，`emacs`）对配置文件进行操作，同时 Git 也提供了一个快捷的打开配置文件进行编辑的参数 `--edit`，可谓是任君选择：
+
+```shell
+git config --system --edit
+```
+
+将调用一个编辑器（参考 `core.editor` 内容）打开 `/etc/gitconfig` 配置文件进行编辑，
+
+## 删除配置信息
+
+--unset
 
 ## 获取帮助信息
 
