@@ -21,7 +21,7 @@ git config --global user.email "youremail@address.com"
     email = youremail@address.com
 ```
 
-在这里你可能会有疑问，那什么时候 Git 才会读写 `~/.config/git/config` 配置文件呢？[官方文档](https://git-scm.com/docs/git-config)给出的解释是：仅当 `~/.gitconfig` 不存在，且 `~/.config/git/config` 存在时，它才会生效。
+在这里你可能会有疑问，那什么时候 Git 才会读写 `~/.config/git/config` 呢？[官方文档](https://git-scm.com/docs/git-config)给出的解释是：仅当 `~/.gitconfig` 不存在，且 `~/.config/git/config` 存在时，它才会生效。
 
 最后一个读取的配置文件是当前 Git 目录下的 `.git/config`，配置文件中的内容仅作用于当前 Git 仓库，你可以通过给 `git config` 命令带上 `--local` 参数读写该配置文件，如果你执行命令时不指定任何级别，那么默认级别就是它。
 
@@ -34,11 +34,11 @@ git config --global user.email "youremail@address.com"
 用户 | `--global` | `~/.gitconfig` 或 `~/.config/git/config`
 仓库 | `--local` | `.git/config`
 
-> Git 的配置文件都是普通文本文件，所以你可以使用普通文本编辑器对配置文件进行修改或新增配置项，这会比运行 `git config` 命令容易得多。
+> Git 的配置文件都是普通文本文件，所以你可以使用普通文本编辑器对配置文件进行修改，这会比运行 `git config` 命令容易得多。
 
 ## 基本配置
 
-Git 提供了大量的配置项供你自定义它的非默认行为，你可以在你喜爱的 Linux 终端上输入 `git config` 之后按两次 `TAB` 键并根据提示输入 `y`，即可列出所有的配置项。当然了，其中大部分的配置都有其特定的使用场景，本文将只关注 Git 通用的一部分配置，每一个配置项的详细信息及注意事项可以参考：
+Git 提供了大量的配置项供你自定义它的非默认行为，你可以在你喜爱的 Linux 终端上输入 `git config` 之后按两次 `TAB` 键并根据提示输入 `y`，列出所有的配置项。当然了，其中大部分的配置都有其特定的使用场景，本文将只关注 Git 通用的一部分配置，每一个配置项的详细信息及注意事项可以参考：
 1. 官方文档：[https://git-scm.com/docs/git-config](https://git-scm.com/docs/git-config)
 2. 或者参考本地手册：
 
@@ -53,11 +53,11 @@ Git 提供了大量的配置项供你自定义它的非默认行为，你可以�
     man git-config
     ```
 
-在前面的内容中我们已经见识了 `user.name` 及 `user.email` 的配置，接下来我们再看几个 Git 的常用配置。
+在前面的内容中我们已经了解了 `user.name` 及 `user.email` 的配置，接下来我们再看几个 Git 的常用配置。
 
 **core.editor**
 
-默认情况下，Git 使用当前系统环境变量（`EDITOR` 或者 `VISUAL`）所定义的编辑器进行编辑，如果环境变量为空，在 Linux 操作系统中可以使用命令 `update-alternative --config editor` 查看当前系统配置的编辑器，比如：
+默认情况下，Git 使用当前系统环境变量（`EDITOR` 或者 `VISUAL`）所定义的编辑器进行编辑，如果环境变量为空，在 Linux 操作系统中还可以使用命令 `update-alternative --config editor` 查看当前系统配置的编辑器，比如：
 
 ```shell
 $ update-alternative --config editor
@@ -75,7 +75,7 @@ There are 5 choices for the alternative editor (providing /usr/bin/editor).
 Press <enter> to keep the current choice[*], or type selection number:
 ```
 
-在当前系统配置的默认编辑器为 `/bin/nano`，数字前面带有 **\*** 号的便是。如果你不希望使用系统默认配置，那么此处可以使用 `core.editor` 进行配置：
+在当前系统配置的默认编辑器为 `/bin/nano`，数字前面带有 **\*** 号的便是。如果你不希望使用系统默认配置，那么你可以使用 `core.editor` 进行配置：
 
 ```shell
 git config --global core.editor vi
@@ -166,23 +166,12 @@ core.logallrefupdates=true
 
 当带上级别参数调用时，显示的即是对应级别的配置文件的所有信息：
 
-```shell
-git config --system --list
-```
-
-显示的是 `/etc/gitconfig` 配置文件的信息；
-
-```shell
-git config --global --list
-```
-
-显示的是 `~/.gitconfig` 或 `~/.config/git/config` 配置文件的信息；
-
-```shell
-git config --local --list
-```
-
-显示的是当前 Git 仓库下的 `.git/config` 配置文件的信息。
+命令 | 说明
+-|-
+`git config --system --list` | 显示 `/etc/gitconfig` 文件
+`git config --global --list` | 显示 `~/.gitconfig` 或 `~/.config/git/config` 文件
+`git config --local --list` | 显示 `.git/config` 文件
+`git config --list` | 显示最终生效的配置信息
 
 ## 编辑配置信息
 
@@ -192,18 +181,56 @@ git config --local --list
 git config --system --edit
 ```
 
-将调用一个编辑器（参考 `core.editor` 内容）打开 `/etc/gitconfig` 配置文件进行编辑，
+将调用一个编辑器（参考 `core.editor` 内容）打开 `/etc/gitconfig` 配置文件进行编辑。但是必须保证用户对 `/etc/gitconfig` 有写权限，否则可能会在 `vi` 保存时提示：`"/etc/gitconfig" E212: Can't open file for writing` 的错误。
+
+>如果是普通用户执行该语句，需要使用：`sudo git config --system --edit`
+
+```shell
+git config --global --edit
+```
+
+调用一个编辑器打开 `~/.gitconfig` 或者 `~/.config/git/config` 配置文件进行编辑。
+
+```shell
+git config --edit
+```
+
+调用一个编辑器打开 `.git/config` 配置文件进行编辑，默认是 `--local` 级别。
+
+命令 | 说明
+-|-
+`git config --system --edit` | 编辑 `/etc/gitconfig` 文件
+`git config --global --edit` | 编辑 `~/.gitconfig` 或 `~/.config/git/config` 文件
+`git config --edit` | 编辑 `.git/config` 文件
 
 ## 删除配置信息
 
---unset
+因为 Git 的配置文件都是普通文本文件，所以你可以直接使用编辑器（如 `vi`，`emacs`）对配置文件进行操作。如果删除不再需要的配置项，只需调用编辑器打开配置文件，将配置项从文件移除，最后保存退出即可。同时你也可以使用 Git 提供的 `--unset` 指令来对配置文件进行操作。
 
-## 获取帮助信息
+比如，某个月黑风高的夜晚，你通过配置命令 `git config --global core.editor emacs` 给 Git 配置了一个酷炫的编辑器，此时在 `~/.gitconfig` 文件中就会生成一条配置信息：
 
-git config --help
-git help config
-man git-config
-https://git-scm.com/docs/git-config
+```shell
+[core]
+    editor=emacs
+```
+
+然后有一天，你突发奇想（这种事你经常干）希望 Git 使用系统默认配置的编辑器时，你可以使用 `--unset` 来完成这事了：
+
+```shell
+git config --global --unset core.editor
+```
+
+执行完上面的命令之后，本来在 `~/.gitconfig` 文件中的 `editor=emacs` 便会被移除，是的，这与你手动删除的效果是一样的。如果不带级别参数调用，默认是移除 `.git/config` 配置文件中的匹配项。
+
+命令 | 说明
+-|-
+`git config --system --unset key` | 移除在 `/etc/gitconfig` 中匹配 `key` 的一行
+`git config --global --unset key` | 移除在 `~/.gitconfig` 或 `~/.config/git/config` 中匹配 `key` 的一行
+`git config --unset key` | 移除在 `.git/config` 中匹配 `key` 的一行
 
 ## 参考文档
 
+[1] [Pro Git](https://git-scm.com/book/en/v2)  
+[2] [git-config](https://git-scm.com/docs/git-config)  
+[3] [Git教程 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/896043488029600)  
+[4] `git config --help`
