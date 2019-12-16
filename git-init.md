@@ -1,6 +1,6 @@
 # 创建 Git 仓库
 
-## 
+## 例子
 
 ```shell
 git init                    (1)
