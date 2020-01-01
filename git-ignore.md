@@ -16,6 +16,12 @@
 
 当然我不建议你从头开始编写自己的 `.gitignore` 文件，因为 [github](https://github.com/github/gitignore) 网站已经为我们提供了各种配置文件，你可以 `git clone` 下来也可以直接在线浏览：[https://github.com/github/gitignore](https://github.com/github/gitignore)，根据自己的需求进行组合即可。比如你可以将 [C.gitignore](https://github.com/github/gitignore/blob/master/C.gitignore) 与 [C++.gitignore](https://github.com/github/gitignore/blob/master/C%2B%2B.gitignore) 组合成一个 `.gitignore` 来满足项目中既有 C 代码也有 C++ 代码的情况。
 
+克隆远程 gitignore 仓库：
+
+```bash
+git clone https://github.com/github/gitignore
+```
+
 ## 用法例子
 
 还是以 [C.gitignore](https://github.com/github/gitignore/blob/master/C.gitignore) 为例，讲解一下 `.gitignore` 的用法与编写规则：
@@ -64,7 +70,7 @@ m4/libtool.m4
 ```
 
 1. 忽略 `/tmp/cache/models` 文件夹下的所有文件；
-2. 但 `/tmp/cache/models/empty` 文件除外；
+2. 但不忽略 `/tmp/cache/models/empty` 文件；
 3. 以 `("!")` 开头的行将不会被忽略，一般用于希望忽略整个文件夹的内容，但仍有部分文件或文件夹需要更新到仓库中的情况。
 4. 使用 `"\"` 能够对 `"!"` 进行转义，如 `\!important.txt` 匹配的是文件名以 `"!"` 开头的 `!important` 文件。
 
@@ -106,12 +112,16 @@ m4/libtool.m4
 
 ## 作用文件
 
+在 gitignore 文件中的每一行指定了一个模式，当决定是否忽略一个路径的时候，Git 通常会从多个源检查 gitignore 文件。
 
+- `.gitignore`
+- `.git/info/exclude`
+- `~/.config/git/ignore`，`core.excludesFile`
 
 ## 参考文档
 
 [1] [Pro Git](https://git-scm.com/book/en/v2)  
-[2] [gitignore](https://git-scm.com/docs/gitignore)  
+[2] [gitignore 官方文档](https://git-scm.com/docs/gitignore)  
 [3] [Git教程 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/896043488029600/900004590234208)  
 [4] `git help ignore`  
 [5] `man gitignore`
