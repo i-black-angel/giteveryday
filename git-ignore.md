@@ -110,13 +110,14 @@ m4/libtool.m4
 - 两个星号 `"**"` 匹配 0 个或任意多个文件夹；
 - 中括号 `"[]"` 表达式定义匹配的字符范围。
 
-## 作用文件
+## 忽略规则
 
-在 gitignore 文件中的每一行指定了一个模式，当决定是否忽略一个路径的时候，Git 通常会从多个源检查 gitignore 文件。
+在 gitignore 文件中，每一行指定了一个忽略规则，当决定是否忽略一个路径的时候，Git 通常会从多个源进行检查，优先级从高到低：
 
-- `.gitignore`
-- `.git/info/exclude`
-- `~/.config/git/ignore`，`core.excludesFile`
+- 从命令行读取可用的忽略规则；
+- 从当前目录读取 `.gitignore` 文件；
+- 读取 Git 仓库目录下的 `.git/info/exclude` 文件；
+- 读取 `core.excludesFile` 参数定义的文件，默认值是 $XDG_CONFIG_HOME/git/ignore，如果环境变量  $XDG_CONFIG_HOME 未定义或者为空，则默认读取 `~/.config/git/ignore` 文件。
 
 ## 参考文档
 
