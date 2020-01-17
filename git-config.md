@@ -142,6 +142,14 @@ Git 1.8.4 及以后的版本默认参数是 `auto`，意味着默认已经打开
 git config --global color.ui auto
 ```
 
+**core.excludesfile**
+
+指定忽略规则的文件，默认是 $XDG_CONFIG_HOME/git/ignore，如果 $XDG_CONFIG_HOME 未定义或者为空，则使用 `~/.config/git/ignore` 代替。例子，手动将 `~/.gitignore` 指定为忽略文件：
+
+```bash
+git config --global core.excludesfile ~/.gitignore
+```
+
 ## 列出配置信息
 
 在**配置文件**一节中的内容提到，Git 会依次读取三个级别（system，global，local）的配置文件信息，因为配置文件都是普通文本文件，你可以直接使用编辑器打开查看，或者使用 Git 提供的 `--list` 进行查看：
@@ -233,4 +241,5 @@ git config --global --unset core.editor
 [1] [Pro Git](https://git-scm.com/book/en/v2)  
 [2] [git-config](https://git-scm.com/docs/git-config)  
 [3] [Git教程 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/896043488029600)  
-[4] `git config --help`
+[4] `git config --help`  
+[5] `man git-config`
