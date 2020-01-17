@@ -39,6 +39,7 @@ git config --global user.email "youremail@address.com"
 ## 基本配置
 
 Git 提供了大量的配置项供你自定义它的非默认行为，你可以在你喜爱的 Linux 终端上输入 `git config` 之后按两次 `TAB` 键并根据提示输入 `y`，列出所有的配置项。当然了，其中大部分的配置都有其特定的使用场景，本文将只关注 Git 通用的一部分配置，每一个配置项的详细信息及注意事项可以参考：
+
 1. 官方文档：[https://git-scm.com/docs/git-config](https://git-scm.com/docs/git-config)
 2. 或者参考本地手册：
 
