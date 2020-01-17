@@ -55,7 +55,7 @@ Git 提供了大量的配置项供你自定义它的非默认行为，你可以�
 
 在前面的内容中我们已经了解了 `user.name` 及 `user.email` 的配置，接下来我们再看几个 Git 的常用配置。
 
-**core.editor**
+### core.editor
 
 默认情况下，Git 使用当前系统环境变量（`EDITOR` 或者 `VISUAL`）所定义的编辑器进行编辑，如果环境变量为空，在 Linux 操作系统中还可以使用命令 `update-alternative --config editor` 查看当前系统配置的编辑器，比如：
 
@@ -85,7 +85,7 @@ git config --global core.editor vi
 
 这样的话，不管你当前系统的默认编辑器是什么，Git 都会使用 `vi` 作为编辑器来编辑信息。
 
-**alias.\***
+### alias.*
 
 Git 配置中最实用的我认为就是 `alias.*` 了，alias 的中文意思是“别名”，意思是可以使用另一个命名来代替本来的名称，这样你就可以使用一些简写来代替长长的命令行输入了。比如，你可以使用 `git st` 代替 `git status` 命令（正如大多数人正在偷懒的做法一样）：
 
@@ -128,7 +128,7 @@ git unstage thread.cpp
 
 显示最后一次提交信息也是，只需要使用 `git last` 来完成即可。
 
-**color.ui**
+### color.ui
 
 Git 配置中另外一个非常重要的特性是颜色。Git 完全支持彩色终端的输出，能够使用不同颜色的可视化标记来达到快速信息分析的目的。颜色输出可以通过 `color.ui` 的值来进行配置，有三个重要的参数值：
 
@@ -142,13 +142,17 @@ Git 1.8.4 及以后的版本默认参数是 `auto`，意味着默认已经打开
 git config --global color.ui auto
 ```
 
-**core.excludesfile**
+### core.excludesfile
 
-指定忽略规则的文件，默认是 $XDG_CONFIG_HOME/git/ignore，如果 $XDG_CONFIG_HOME 未定义或者为空，则使用 `~/.config/git/ignore` 代替。例子，手动将 `~/.gitignore` 指定为忽略文件：
+指定忽略规则的文件，默认是 $XDG_CONFIG_HOME/git/ignore，如果 $XDG_CONFIG_HOME 未定义或者为空，则使用 `~/.config/git/ignore` 代替。例子，可以手动将 `~/.gitignore` 指定为忽略文件：
 
 ```bash
 git config --global core.excludesfile ~/.gitignore
 ```
+
+### core.autocrlf
+
+自动进行 **CRLF** 与 **LF** 的转换，当你希望在工作区以 **CRLF** `(\r\n)` 作为换行方式，而在 Git 仓库中以 **LF** `(\n)` 作为行结尾的时候设置为 **true**，当设置成 **input** 时，则保留文件原始的行尾，不进行转换。
 
 ## 列出配置信息
 
