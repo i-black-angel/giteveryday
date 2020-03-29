@@ -2,7 +2,7 @@
 
 ## 配置文件
 
-也许当初你匆匆而过，早已经忘记了在何时何地配置过你的用户名和邮箱地址，但这却是使用 git 最初的一件事，形如：
+使用 git 第一件事：
 
 ```shell
 git config --global user.name "Your Name"
