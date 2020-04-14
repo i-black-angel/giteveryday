@@ -155,6 +155,10 @@ git config --global core.excludesfile ~/.gitignore
 
 自动进行 **CRLF** 与 **LF** 的转换，当你希望在工作区以 **CRLF** `(\r\n)` 作为换行方式，而在 Git 仓库中以 **LF** `(\n)` 作为行结尾的时候设置为 **true**，当设置成 **input** 时，则保留文件原始的行尾，不进行转换。
 
+```bash
+git config core.autocrlf input
+```
+
 ## 列出配置信息
 
 在**配置文件**一节中的内容提到，Git 会依次读取三个级别（system，global，local）的配置文件信息，因为配置文件都是普通文本文件，你可以直接使用编辑器打开查看，或者使用 Git 提供的 `--list` 进行查看：
