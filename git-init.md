@@ -20,7 +20,7 @@ Initialized empty Git repository in /tmp/hello/.git/
 ```shell
 git init
 git add .
-git commit -m 'comment'
+git commit -m 'Init import repository'
 ```
 
 1. 创建一个 `.git` 目录；
