@@ -159,6 +159,42 @@ git config --global core.excludesfile ~/.gitignore
 git config core.autocrlf input
 ```
 
+### core.quotepath
+
+`quotepath` 使用通俗的语言表达就是“使用双引号将路径名称引起来”，默认情况下，该值为 **true**，当你在 **git** 仓库中新增了一个名为 “说明文档.txt” 的文件后，使用 `git status` 命令进行状态查询的时候，显示如下：
+
+```bash
+$ git st
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	"\350\257\264\346\230\216\346\226\207\346\241\243.txt"
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+ **git** 使用反斜杠对非 ASCII 码进行转义，因为中文字符超出了 ASCII 码 128 的范围，所以你看见的是转义后的字符。如果这个变量设置为 **false**，则超过 0x80（非 ASCII 码）的字符将不再进行转义，并逐字输出。
+
+ ```bash
+ git config --global core.quotepath false
+ ```
+
+全局设置 `core.quotepath` 为 `false` 值，再次使用 `git status` 查询状态的输出将会变成：
+
+```bash
+$ git st
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	说明文档.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+新增加的文件名不再使用双引号引起来，并且不进行转义输出。
+
 ## 列出配置信息
 
 在**配置文件**一节中的内容提到，Git 会依次读取三个级别（system，global，local）的配置文件信息，因为配置文件都是普通文本文件，你可以直接使用编辑器打开查看，或者使用 Git 提供的 `--list` 进行查看：
