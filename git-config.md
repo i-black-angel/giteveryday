@@ -174,7 +174,7 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
- **git** 使用反斜杠对非 ASCII 码进行转义，因为中文字符超出了 ASCII 码 128 的范围，所以你看见的是转义后的字符。如果这个变量设置为 **false**，则超过 0x80（非 ASCII 码）的字符将不再进行转义，并逐字输出。
+ **git** 使用反斜杠对非 ASCII 码进行转义，因为中文字符超出了 ASCII 码 128 的范围，所以你看见的是转义后的字符。如果这个变量设置为 **false**，则超过 128（非 ASCII 码）的字符将不再进行转义，并逐字输出。
 
  ```bash
  git config --global core.quotepath false
